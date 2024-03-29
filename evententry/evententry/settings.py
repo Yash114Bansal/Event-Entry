@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_yasg',
+    'attendance',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -86,6 +89,18 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=100),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=100),
     'SLIDING_TOKEN_LIFETIME': timedelta(days=100),
+}
+
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+        },
+    },
+    "USE_SESSION_AUTH": False,
+    "JSON_EDITOR": True,
 }
 
 # Password validation
