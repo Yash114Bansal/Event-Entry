@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  evententry:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8002"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/static
+    restart: always
