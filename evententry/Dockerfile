@@ -11,4 +11,4 @@ EXPOSE 8002
 
 COPY . .
 
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8002"]
+CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --no-input && gunicorn evententry.wsgi:application -b 0.0.0.0:8002"]
