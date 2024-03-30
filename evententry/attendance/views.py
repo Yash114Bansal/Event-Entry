@@ -77,3 +77,8 @@ class UnmarkPresentView(APIView):
         student.save()
 
         return Response({"name": student.name}, status=status.HTTP_200_OK)
+
+class DetailsView(generics.RetrieveAPIView):
+    serializer_class = StudentSerializer
+    queryset = Student.objects.all()
+    lookup_field = 'student_number'
