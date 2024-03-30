@@ -28,6 +28,10 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["localhost", "*.silive.in", "127.0.0.1"]
 
+env_allowed_host = os.environ.get("ALLOWED_HOST")
+if env_allowed_host:
+    ALLOWED_HOSTS.append(env_allowed_host.strip())
+
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1',
