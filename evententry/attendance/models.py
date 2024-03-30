@@ -22,4 +22,10 @@ class Student(models.Model):
     timestamp_day4 = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.name} :: {self.roll_no}"
+        return f"{self.name} :: {self.student_number}"
+
+class ActiveDay(models.Model):
+    day = models.CharField(max_length=4,default='day1')
+    
+    def __str__(self):
+        return self.day
