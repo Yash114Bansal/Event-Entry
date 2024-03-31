@@ -1,18 +1,22 @@
 from rest_framework import status, generics
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework.permissions import IsAdminUser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Student, ActiveDay
-from .serializers import StudentSerializer
+from .serializers import StudentSerializer,MarkPresentSerializer
 
-class MarkPresentView(APIView):
+class MarkPresentView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
-    def post(self, request, student_number, day):
-        
+    serializer_class = MarkPresentSerializer
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        validated_data = serializer.validated_data
+        student_number=validated_data['student_number']
+        day = validated_data['day']
         student = get_object_or_404(Student, student_number=student_number)
 
         # Check if student exists
@@ -59,10 +63,16 @@ class PresentStudentsListView(generics.ListAPIView):
 
         return queryset
     
-class UnmarkPresentView(APIView):
+class UnmarkPresentView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminUser]
-    def post(self, request, student_number, day):
+    serializer_class = MarkPresentSerializer
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        validated_data = serializer.validated_data
+        student_number=validated_data['student_number']
+        day = validated_data['day']
         student = get_object_or_404(Student, student_number=student_number)
 
         # Check if student exists
