@@ -5,7 +5,7 @@ from django.utils import timezone
 from rest_framework.permissions import IsAdminUser
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Student, ActiveDay
-from .serializers import StudentSerializer,MarkPresentSerializer
+from .serializers import StudentSerializer,MarkPresentSerializer, StudentDetailSerializer
 
 class MarkPresentView(generics.GenericAPIView):
     authentication_classes = [JWTAuthentication]
@@ -101,6 +101,19 @@ class UnmarkPresentView(generics.GenericAPIView):
         return Response({"msg": "Successfully Unmarked Present"}, status=status.HTTP_200_OK)
 
 class DetailsView(generics.RetrieveAPIView):
-    serializer_class = StudentSerializer
-    queryset = Student.objects.all()
-    lookup_field = 'student_number'
+    serializer_class = StudentDetailSerializer
+
+    def get_queryset(self):
+        return Student.objects.all()
+
+    def get_object(self):
+        student_number = self.kwargs.get('student_number')
+        return get_object_or_404(self.get_queryset(), student_number=student_number)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        data = self.get_serializer(instance).data
+        active_day = ActiveDay.objects.first()
+        is_present_attr = f'is_present_{active_day.day}'
+        data['is_present'] = getattr(instance, is_present_attr)
+        return Response(data)
