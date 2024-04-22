@@ -28,7 +28,7 @@ class MarkPresentView(generics.GenericAPIView):
             return Response({"error": "Fees not paid"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check if day is valid
-        if day not in ['day1', 'day2', 'day3', 'day4']:
+        if day not in ['day1', 'day2', 'day3', 'day4','day5']:
             return Response({"error": "Invalid day"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check If Day is active
@@ -55,7 +55,7 @@ class PresentStudentsListView(generics.ListAPIView):
     def get_queryset(self):
         day = self.kwargs.get('day')
 
-        if day not in ['day1', 'day2', 'day3', 'day4']:
+        if day not in ['day1', 'day2', 'day3', 'day4','day5']:
             return Student.objects.none()
 
         queryset = Student.objects.filter(**{f'is_present_{day}': True})
@@ -80,7 +80,7 @@ class UnmarkPresentView(generics.GenericAPIView):
             return Response({"error": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
 
         # Check if day is valid
-        if day not in ['day1', 'day2', 'day3', 'day4']:
+        if day not in ['day1', 'day2', 'day3', 'day4','day5']:
             return Response({"error": "Invalid day"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check If Day is active

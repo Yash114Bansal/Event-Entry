@@ -15,6 +15,7 @@ class Student(models.Model):
     is_present_day2 = models.BooleanField(default=False)
     is_present_day3 = models.BooleanField(default=False)
     is_present_day4 = models.BooleanField(default=False)
+    is_present_day5 = models.BooleanField(default=False)
     
     timestamp_day1 = models.DateTimeField(null=True, blank=True)
     timestamp_day2 = models.DateTimeField(null=True, blank=True)

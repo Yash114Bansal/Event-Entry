@@ -8,7 +8,7 @@ class StudentSerializer(serializers.ModelSerializer):
         
 class MarkPresentSerializer(serializers.Serializer):
     student_number = serializers.CharField()
-    day = serializers.ChoiceField(choices=['day1', 'day2', 'day3', 'day4'])
+    day = serializers.ChoiceField(choices=['day1', 'day2', 'day3', 'day4','day5'])
     
 class StudentDetailSerializer(serializers.ModelSerializer):
     is_present = serializers.BooleanField(read_only=True)
