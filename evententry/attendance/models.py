@@ -21,6 +21,7 @@ class Student(models.Model):
     timestamp_day2 = models.DateTimeField(null=True, blank=True)
     timestamp_day3 = models.DateTimeField(null=True, blank=True)
     timestamp_day4 = models.DateTimeField(null=True, blank=True)
+    timestamp_day5 = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.name} :: {self.student_number}"
